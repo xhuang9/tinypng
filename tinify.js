@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
@@ -9,6 +7,8 @@ dotenv.config();
 
 // === CONFIG FROM .env ===
 const API_KEY = process.env.TINIFY_API_KEY;
+const TARGET_FOLDER = process.env.TARGET_FOLDER || process.cwd();
+const FILE_EXTENSIONS = (process.env.FILE_EXTENSIONS || 'png|jpg|jpeg').split('|').map(ext => ext.toLowerCase());
 const INCLUDE_SUB_FOLDER = process.env.INCLUDE_SUB_FOLDER !== 'false';
 const REPLACE_EXISTING_FILE = process.env.REPLACE_EXISTING_FILE !== 'false';
 const SHOULD_RESIZE = process.env.SHOULD_RESIZE !== 'false';
@@ -18,7 +18,10 @@ const RESIZE_MAX_HEIGHT = process.env.RESIZE_MAX_HEIGHT === 'null' ? null : pars
 
 tinify.key = API_KEY;
 
-const __dirname = process.cwd();
+if (!fs.existsSync(TARGET_FOLDER)) {
+  console.error(`❌ ERROR: Provided TARGET_FOLDER does not exist: ${TARGET_FOLDER}`);
+  process.exit(1);
+}
 
 function getAllImages(dir) {
   const items = fs.readdirSync(dir, { withFileTypes: true });
@@ -27,8 +30,11 @@ function getAllImages(dir) {
     const full = path.join(dir, item.name);
     if (item.isDirectory()) {
       if (INCLUDE_SUB_FOLDER) imgs = imgs.concat(getAllImages(full));
-    } else if (/\.(jpe?g|png)$/i.test(item.name)) {
-      imgs.push(full);
+    } else {
+      const ext = path.extname(item.name).slice(1).toLowerCase();
+      if (FILE_EXTENSIONS.includes(ext)) {
+        imgs.push(full);
+      }
     }
   }
   return imgs;
