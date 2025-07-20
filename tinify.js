@@ -75,7 +75,7 @@ async function processImage(filePath) {
 (async () => {
   const imgs = getAllImages(__dirname);
   if (imgs.length === 0) {
-    console.log('No .jpg/.png files found.');
+    console.log('No image files found.');
     process.exit(0);
   }
 
