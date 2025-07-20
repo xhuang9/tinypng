@@ -1,6 +1,6 @@
 # TinyPNG Image Optimizer
 
-A Node.js command-line tool that compresses and optionally resizes `.jpg`, `.jpeg`, and `.png` images using the [TinyPNG API](https://tinypng.com/developers). Supports recursive folder scanning and flexible configuration options.
+A Node.js command-line tool that compresses and optionally resizes `.jpg`, `.jpeg`, and `.png` images and more using the [TinyPNG API](https://tinypng.com/developers). Supports recursive folder scanning and flexible configuration options.
 
 ## ✨ Features
 
