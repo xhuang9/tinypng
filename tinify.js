@@ -44,7 +44,7 @@ async function processImage(filePath) {
   const tempResize = filePath + '.resized';
   const outDir = REPLACE_EXISTING_FILE ?
     path.dirname(filePath) :
-    path.join(__dirname, 'minified');
+    path.join(TARGET_FOLDER, 'minified');
 
   if (!REPLACE_EXISTING_FILE && !fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });
@@ -73,7 +73,7 @@ async function processImage(filePath) {
 }
 
 (async () => {
-  const imgs = getAllImages(__dirname);
+  const imgs = getAllImages(TARGET_FOLDER);
   if (imgs.length === 0) {
     console.log('No image files found.');
     process.exit(0);
