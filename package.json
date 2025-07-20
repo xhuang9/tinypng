@@ -1,0 +1,12 @@
+{
+  "name": "tinypng-optimizer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "tinify": "node tinify.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "tinify": "^1.8.1"
+  }
+}
